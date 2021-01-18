@@ -19,7 +19,7 @@ println scriptFile
 hudson.FilePath workspace =  hudson.model.Executor.currentExecutor().getCurrentWorkspace()
 
 println workspace
-println workspace.getClass.toString()
+println workspace.getClass().toString()
 
 //println getJsonFiles(workspace)
 
