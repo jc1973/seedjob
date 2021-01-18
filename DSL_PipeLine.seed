@@ -14,7 +14,11 @@ println scriptDir
 println scriptFile
 //println env.WORKSPACE
 
-println("script directory: ${new File(__FILE__).parent.absolutePath}")
+// println("script directory: ${new File(__FILE__).parent.absolutePath}")
+
+hudson.FilePath workspace =  hudson.model.Executor.currentExecutor().getCurrentWorkspace()
+
+println workspace
 
 // def scriptDirNew = new File(__FILE__).parent.absolutePath
 //println scriptDirNew
