@@ -20,6 +20,8 @@ hudson.FilePath workspace =  hudson.model.Executor.currentExecutor().getCurrentW
 
 println workspace
 
+println getJsonFiles(workspace)
+
 // def scriptDirNew = new File(__FILE__).parent.absolutePath
 //println scriptDirNew
 
@@ -106,10 +108,10 @@ pipelineJob('DSL_Pipeline') {
 //  }
 //}
 
-def getJsonFiles() {
+def getJsonFiles(workspace) {
 
   def jsonFiles = []
-  new File('.').eachFileRecurse(FILES) {
+  new File(workspace).eachFileRecurse(FILES) {
       if(it.name.endsWith('.json')) {
           jsonFiles << it
       }
