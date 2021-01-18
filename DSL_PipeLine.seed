@@ -13,6 +13,7 @@ def scriptDir = new File(getClass().protectionDomain.codeSource.location.path).p
 
 println scriptDir
 println scriptFile
+println env.WORKSPACE
 
 
 
