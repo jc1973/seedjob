@@ -14,9 +14,10 @@ println scriptDir
 println scriptFile
 //println env.WORKSPACE
 
+println("script directory: ${new File(__FILE__).parent.absolutePath}")
 
-def scriptDirNew = new File(__FILE__).parent.absolutePath
-println scriptDirNew
+// def scriptDirNew = new File(__FILE__).parent.absolutePath
+//println scriptDirNew
 
 
 // jsonFiles = getJsonFiles()
