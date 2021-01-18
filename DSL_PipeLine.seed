@@ -1,5 +1,13 @@
 #!/usr/bin/env groovy
 
+import groovy.json.JsonSlurperClassic
+import groovy.io.FileType
+import static groovy.io.FileType.FILES
+
+
+
+// def jsonFile = 'jenkins-jobs.json'
+
 pipelineJob('DSL_Pipeline') {
 
   // def repo = 'https://github.com/jc1973/ansible-jenkins'
@@ -29,3 +37,54 @@ pipelineJob('DSL_Pipeline') {
     }
   }
 }
+
+def readJsonFile(jsonFile) {
+  Map jsonData = [:]
+  try {
+    if (fileExists("${jsonFile}")) {
+      def json = readFile(file:"${jsonFile}")
+      jsonData = new JsonSlurperClassic().parseText(json)
+    }
+    else {
+      echo "Failure - the JSON file:  ${jsonFile} does not exist"
+      sh "exit 1"
+    }
+  }
+  catch(err)  {
+    echo "Err: failed when loading JSON file ${jsonFile} with Error: " + err.toString()
+    throw err
+  }
+
+  return jsonData
+}
+
+def ScanDir {
+  def scriptFile = getClass().protectionDomain.codeSource.location.path
+  def scriptDir = new File(getClass().protectionDomain.codeSource.location.path).parent
+
+  println scriptDir
+  println scriptFile
+
+  def list = []
+
+  def dir = new File(scriptDir)
+  dir.eachFileRecurse (FileType.FILES) { file ->
+    list << file
+  }
+
+  list.each {
+    println it.path
+  }
+}
+
+def getJsonFiles {
+
+  def jsonFiles = []
+  new File('.').eachFileRecurse(FILES) {
+      if(it.name.endsWith('.json')) {
+          jsonFiles << it
+      }
+  }
+  return jsonFiles
+}
+
