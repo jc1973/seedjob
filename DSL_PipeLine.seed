@@ -5,12 +5,14 @@ import groovy.io.FileType
 import static groovy.io.FileType.FILES
 
 
-jsonFiles = getJsonFiles()
+println 'hello'
 
-jsonFiles.each {
-  println it
-  println readJsonFile(it)
-}
+//jsonFiles = getJsonFiles()
+//
+//jsonFiles.each {
+//  println it
+//  println readJsonFile(it)
+//}
 
 
 
