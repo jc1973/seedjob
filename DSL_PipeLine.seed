@@ -4,7 +4,6 @@ import groovy.json.JsonSlurperClassic
 import groovy.io.FileType
 import static groovy.io.FileType.FILES
 
-@NonCPS
 def printParams() {
   env.getEnvironment().each { name, value -> println "Name: $name -> Value $value" }
 }
