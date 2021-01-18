@@ -7,87 +7,87 @@ import static groovy.io.FileType.FILES
 
 println 'hello'
 
-//jsonFiles = getJsonFiles()
-//
-//jsonFiles.each {
-//  println it
-//  println readJsonFile(it)
-//}
+jsonFiles = getJsonFiles()
 
-
-
-//pipelineJob('DSL_Pipeline') {
+////jsonFiles.each {
+////  println it
+////  println readJsonFile(it)
+////}
 //
-//  // def repo = 'https://github.com/jc1973/ansible-jenkins'
-//  def repo = 'https://github.com/jc1973/seedjob'
 //
-//  triggers {
-//    scm('H/5 * * * *')
-//  }
-//  displayName('sample-pipeline')
-//  description("Pipeline for $repo")
-//  
 //
-//  definition {
-//    cpsScm {
-//      scm {
-//        git {
-//          remote { url(repo) }
-//          branches('master', '**/feature*')
-//          scriptPath('pipelines/Jenkinsfile2')
-//          extensions { }  // required as otherwise it may try to tag the repo, which you may not want
-//        }
+////pipelineJob('DSL_Pipeline') {
+////
+////  // def repo = 'https://github.com/jc1973/ansible-jenkins'
+////  def repo = 'https://github.com/jc1973/seedjob'
+////
+////  triggers {
+////    scm('H/5 * * * *')
+////  }
+////  displayName('sample-pipeline')
+////  description("Pipeline for $repo")
+////  
+////
+////  definition {
+////    cpsScm {
+////      scm {
+////        git {
+////          remote { url(repo) }
+////          branches('master', '**/feature*')
+////          scriptPath('pipelines/Jenkinsfile2')
+////          extensions { }  // required as otherwise it may try to tag the repo, which you may not want
+////        }
+////
+////        // the single line below also works, but it
+////        // only covers the 'master' branch and may not give you
+////        // enough control.
+////        // git(repo, 'master', { node -> node / 'extensions' << '' } )
+////      }
+////    }
+////  }
+////}
+////
 //
-//        // the single line below also works, but it
-//        // only covers the 'master' branch and may not give you
-//        // enough control.
-//        // git(repo, 'master', { node -> node / 'extensions' << '' } )
-//      }
+//
+//
+//def readJsonFile(jsonFile) {
+//  Map jsonData = [:]
+//  try {
+//    if (fileExists("${jsonFile}")) {
+//      def json = readFile(file:"${jsonFile}")
+//      jsonData = new JsonSlurperClassic().parseText(json)
+//    }
+//    else {
+//      echo "Failure - the JSON file:  ${jsonFile} does not exist"
+//      sh "exit 1"
 //    }
 //  }
+//  catch(err)  {
+//    echo "Err: failed when loading JSON file ${jsonFile} with Error: " + err.toString()
+//    throw err
+//  }
+//
+//  return jsonData
 //}
 //
-
-
-
-def readJsonFile(jsonFile) {
-  Map jsonData = [:]
-  try {
-    if (fileExists("${jsonFile}")) {
-      def json = readFile(file:"${jsonFile}")
-      jsonData = new JsonSlurperClassic().parseText(json)
-    }
-    else {
-      echo "Failure - the JSON file:  ${jsonFile} does not exist"
-      sh "exit 1"
-    }
-  }
-  catch(err)  {
-    echo "Err: failed when loading JSON file ${jsonFile} with Error: " + err.toString()
-    throw err
-  }
-
-  return jsonData
-}
-
-def ScanDir() {
-  def scriptFile = getClass().protectionDomain.codeSource.location.path
-  def scriptDir = new File(getClass().protectionDomain.codeSource.location.path).parent
-
-  println scriptDir
-  println scriptFile
-
-  def list = []
-
-  def dir = new File(scriptDir)
-  dir.eachFileRecurse (FileType.FILES) { file ->
-    list << file
-  }
-
-  list.each {
-    println it.path
-  }
-}
+//def ScanDir() {
+//  def scriptFile = getClass().protectionDomain.codeSource.location.path
+//  def scriptDir = new File(getClass().protectionDomain.codeSource.location.path).parent
+//
+//  println scriptDir
+//  println scriptFile
+//
+//  def list = []
+//
+//  def dir = new File(scriptDir)
+//  dir.eachFileRecurse (FileType.FILES) { file ->
+//    list << file
+//  }
+//
+//  list.each {
+//    println it.path
+//  }
+//}
 
 def getJsonFiles() {
 
