@@ -5,38 +5,48 @@ import groovy.io.FileType
 import static groovy.io.FileType.FILES
 
 
+jsonFiles = getJsonFiles()
 
-// def jsonFile = 'jenkins-jobs.json'
-
-pipelineJob('DSL_Pipeline') {
-
-  // def repo = 'https://github.com/jc1973/ansible-jenkins'
-  def repo = 'https://github.com/jc1973/seedjob'
-
-  triggers {
-    scm('H/5 * * * *')
-  }
-  displayName('sample-pipeline')
-  description("Pipeline for $repo")
-
-  definition {
-    cpsScm {
-      scm {
-        git {
-          remote { url(repo) }
-          branches('master', '**/feature*')
-          scriptPath('pipelines/Jenkinsfile2')
-          extensions { }  // required as otherwise it may try to tag the repo, which you may not want
-        }
-
-        // the single line below also works, but it
-        // only covers the 'master' branch and may not give you
-        // enough control.
-        // git(repo, 'master', { node -> node / 'extensions' << '' } )
-      }
-    }
-  }
+jsonFiles.each {
+  println it
+  println readJsonFile(it)
 }
+
+
+
+//pipelineJob('DSL_Pipeline') {
+//
+//  // def repo = 'https://github.com/jc1973/ansible-jenkins'
+//  def repo = 'https://github.com/jc1973/seedjob'
+//
+//  triggers {
+//    scm('H/5 * * * *')
+//  }
+//  displayName('sample-pipeline')
+//  description("Pipeline for $repo")
+//  
+//
+//  definition {
+//    cpsScm {
+//      scm {
+//        git {
+//          remote { url(repo) }
+//          branches('master', '**/feature*')
+//          scriptPath('pipelines/Jenkinsfile2')
+//          extensions { }  // required as otherwise it may try to tag the repo, which you may not want
+//        }
+//
+//        // the single line below also works, but it
+//        // only covers the 'master' branch and may not give you
+//        // enough control.
+//        // git(repo, 'master', { node -> node / 'extensions' << '' } )
+//      }
+//    }
+//  }
+//}
+//
+
+
 
 def readJsonFile(jsonFile) {
   Map jsonData = [:]
@@ -58,7 +68,7 @@ def readJsonFile(jsonFile) {
   return jsonData
 }
 
-def ScanDir {
+def ScanDir() {
   def scriptFile = getClass().protectionDomain.codeSource.location.path
   def scriptDir = new File(getClass().protectionDomain.codeSource.location.path).parent
 
@@ -77,7 +87,7 @@ def ScanDir {
   }
 }
 
-def getJsonFiles {
+def getJsonFiles() {
 
   def jsonFiles = []
   new File('.').eachFileRecurse(FILES) {

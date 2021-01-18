@@ -1,0 +1,7 @@
+{
+  "job_name": "",
+  "mutibranch": true,
+  "folder_name": "",
+  "jenkinsfile": "Jenkinsfile",
+  "git_repo": ""
+}
