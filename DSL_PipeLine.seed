@@ -5,9 +5,18 @@ import groovy.io.FileType
 import static groovy.io.FileType.FILES
 
 
+
 println 'hello'
 
-jsonFiles = getJsonFiles()
+def scriptFile = getClass().protectionDomain.codeSource.location.path
+def scriptDir = new File(getClass().protectionDomain.codeSource.location.path).parent
+
+println scriptDir
+println scriptFile
+
+
+
+// jsonFiles = getJsonFiles()
 
 ////jsonFiles.each {
 ////  println it
