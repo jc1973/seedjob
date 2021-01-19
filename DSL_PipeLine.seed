@@ -22,7 +22,17 @@ hudson.FilePath workspace =  hudson.model.Executor.currentExecutor().getCurrentW
 println workspace
 println workspace.getClass().toString()
 
+
+
 println getJsonFiles(workspace.toString())
+
+def jsonFiles=getJsonFiles(workspace.toString())
+
+jsonFiles.each { jsonFile ->
+  def jobFolder = jsonFile.parent
+  println jobFolder
+}
+
 
 // def scriptDirNew = new File(__FILE__).parent.absolutePath
 //println scriptDirNew
