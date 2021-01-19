@@ -37,8 +37,9 @@ def jsonFiles=getJsonFiles(workspace.toString())
 
 jsonFiles.each { jsonFile ->
   def jobFolder = jsonFile.parent.toString().split('/').last()
-  println jobFolder
+  // println jobFolder
   println jsonFile
+  println jsonFile.getClass().toString()
   jsonData = readJsonFile('/var/lib/jenkins/workspace/seed-job/test.json')
   
   
