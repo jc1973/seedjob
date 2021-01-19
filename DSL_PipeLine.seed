@@ -96,39 +96,16 @@ pipelineJob('DSL_Pipeline') {
 def readJsonFile(jsonFile) {
   Map jsonData = [:]
 
-  def jsonSlurper = new JsonSlurper()
-  jsonData = jsonSlurper.parse(new File(jsonFile))
-  println(jsonData)
 
-//  try {
-//     if (jsonFile.exists()) {
-//     // println 'File exists ' + jsonFile + ' Class: ' + jsonFile.getClass().toString()
-//     println 'File exists ' 
-//
-//// filename = '/var/lib/jenkins/workspace/seed-job/test.json'
-//
-//      def jsonSlurper = new JsonSlurper()
-//      jsonData = jsonSlurper.parse(new File(jsonFile))
-//
-//      println(jsonData)
-//
-//      // def jsonSlurper = new JsonSlurper()
-//      // jsonData = jsonSlurper.parse(new File(jsonFile))
-//      // def json = new File(jsonFile).text
-//      // def json = readFile(file:"${jsonFile}")
-//
-//      // def json = new File(jsonFile).getText('UTF-8')
-//      // jsonData = new JsonSlurperClassic().parseText(fileContents)
-//   }
-//     else {
-//      println "Failure - the JSON file:  ${jsonFile} does not exist"
-//     //  sh "exit 1"
-//    }
-//  }
-//  catch(err)  {
-//    println  "Err: failed when loading JSON file ${jsonFile} with Error: " + err.toString()
-//    throw err
-//  }
+  try {
+    jsonSlurper = new JsonSlurper()
+    jsonData = jsonSlurper.parse(new File(jsonFile))
+    println(jsonData)
+  }
+  catch(err)  {
+    println  "Err: failed when loading JSON file ${jsonFile} with Error: " + err.toString()
+    throw err
+  }
 
   return jsonData
 }
