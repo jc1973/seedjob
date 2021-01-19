@@ -38,7 +38,8 @@ def jsonFiles=getJsonFiles(workspace.toString())
 jsonFiles.each { jsonFile ->
   def jobFolder = jsonFile.parent.toString().split('/').last()
   println jobFolder
-  jsonData = readJsonFile(jsonFile)
+  println jsonFile
+  //jsonData = readJsonFile(jsonFile)
   
   
 }
