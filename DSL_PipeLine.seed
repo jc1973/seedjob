@@ -39,7 +39,7 @@ jsonFiles.each { jsonFile ->
   def jobFolder = jsonFile.parent.toString().split('/').last()
   println jobFolder
   println jsonFile
-  //jsonData = readJsonFile(jsonFile)
+  jsonData = readJsonFile('/var/lib/jenkins/workspace/seed-job/test.json')
   
   
 }
