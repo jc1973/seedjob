@@ -31,34 +31,34 @@ jsonFiles.each { jsonFile ->
     println jobName
 
     println(jsonData)
-    pipelineJob(jsonData['job_name']) {
-  
-    // def repo = 'https://github.com/jc1973/ansible-jenkins'
-    // def repo = 'https://github.com/jc1973/seedjob'
-    def repo = jsonData['git_repo']
-  
-    displayName(jsonData['job_name'])
-    //description("Pipeline for $repo")
-    
-  
-    definition {
-      cpsScm {
-        scm {
-          git {
-            remote { url(repo) }
-            branches('master', '**/feature*')
-            scriptPath(jsonData['jenkinsfile'])
-            extensions { }  // required as otherwise it may try to tag the repo, which you may not want
-          }
-  
-          // the single line below also works, but it
-          // only covers the 'master' branch and may not give you
-          // enough control.
-          // git(repo, 'master', { node -> node / 'extensions' << '' } )
-        }
-      }
-    }
-  }
+//    pipelineJob(jsonData['job_name']) {
+//  
+//    // def repo = 'https://github.com/jc1973/ansible-jenkins'
+//    // def repo = 'https://github.com/jc1973/seedjob'
+//    def repo = jsonData['git_repo']
+//  
+//    displayName(jsonData['job_name'])
+//    //description("Pipeline for $repo")
+//    
+//  
+//    definition {
+//      cpsScm {
+//        scm {
+//          git {
+//            remote { url(repo) }
+//            branches('master', '**/feature*')
+//            scriptPath(jsonData['jenkinsfile'])
+//            extensions { }  // required as otherwise it may try to tag the repo, which you may not want
+//          }
+//  
+//          // the single line below also works, but it
+//          // only covers the 'master' branch and may not give you
+//          // enough control.
+//          // git(repo, 'master', { node -> node / 'extensions' << '' } )
+//        }
+//      }
+//    }
+//  }
   
 
   
