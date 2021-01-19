@@ -89,9 +89,9 @@ def readJsonFile(jsonFile) {
   try {
     if (jsonFile.exists()) {
       println 'File exists'
-      def json = new File(jsonFile).text
+      // def json = new File(jsonFile).text
       // def json = readFile(file:"${jsonFile}")
-      jsonData = new JsonSlurperClassic().parseText(json)
+      jsonData = new JsonSlurperClassic().parseText(jsonFile)
     }
     else {
       println "Failure - the JSON file:  ${jsonFile} does not exist"
