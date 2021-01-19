@@ -1,143 +1,157 @@
 #!/usr/bin/env groovy
 
+
 import groovy.json.JsonSlurper
-import groovy.io.FileType
-import static groovy.io.FileType.FILES
 
 
-println 'hello'
+filename = 'test.json'
 
-def scriptFile = getClass().protectionDomain.codeSource.location.path
-def scriptDir = new File(getClass().protectionDomain.codeSource.location.path).parent
+def jsonSlurper = new JsonSlurper()
+data = jsonSlurper.parse(new File(filename))
 
-println scriptDir
-println scriptFile
-//println env.WORKSPACE
-
-// println("script directory: ${new File(__FILE__).parent.absolutePath}")
-
-hudson.FilePath workspace =  hudson.model.Executor.currentExecutor().getCurrentWorkspace()
+println(data)
 
 
-println workspace
-println workspace.getClass().toString()
-
-
-
-println getJsonFiles(workspace.toString())
-
-def jsonFiles=getJsonFiles(workspace.toString())
-
-jsonFiles.each { jsonFile ->
-  def jobFolder = jsonFile.parent.toString().split('/').last()
-  println jobFolder
-  jsonData = readJsonFile(jsonFile)
-  
-  
-}
-
-
-// def scriptDirNew = new File(__FILE__).parent.absolutePath
-//println scriptDirNew
-
-
-// jsonFiles = getJsonFiles()
-
-////jsonFiles.each {
-////  println it
-////  println readJsonFile(it)
-////}
+//// Just testing
+//
+//import groovy.json.JsonSlurper
+//import groovy.io.FileType
+//import static groovy.io.FileType.FILES
+//
+//
+//println 'hello'
+//
+//def scriptFile = getClass().protectionDomain.codeSource.location.path
+//def scriptDir = new File(getClass().protectionDomain.codeSource.location.path).parent
+//
+//println scriptDir
+//println scriptFile
+////println env.WORKSPACE
+//
+//// println("script directory: ${new File(__FILE__).parent.absolutePath}")
+//
+//hudson.FilePath workspace =  hudson.model.Executor.currentExecutor().getCurrentWorkspace()
+//
+//
+//println workspace
+//println workspace.getClass().toString()
 //
 //
 //
-pipelineJob('DSL_Pipeline') {
-
-  // def repo = 'https://github.com/jc1973/ansible-jenkins'
-  def repo = 'https://github.com/jc1973/seedjob'
-
-  triggers {
-    scm('H/5 * * * *')
-  }
-  displayName('sample-pipeline')
-  description("Pipeline for $repo")
-  
-
-  definition {
-    cpsScm {
-      scm {
-        git {
-          remote { url(repo) }
-          branches('master', '**/feature*')
-          scriptPath('pipelines/Jenkinsfile2')
-          extensions { }  // required as otherwise it may try to tag the repo, which you may not want
-        }
-
-        // the single line below also works, but it
-        // only covers the 'master' branch and may not give you
-        // enough control.
-        // git(repo, 'master', { node -> node / 'extensions' << '' } )
-      }
-    }
-  }
-}
-
-
-
-
-def readJsonFile(jsonFile) {
-  Map jsonData = [:]
-  try {
-    if (jsonFile.exists()) {
-      println 'File exists'
-
-      def jsonSlurper = new JsonSlurper()
-      jsonData = jsonSlurper.parse(new File(jsonFile))
-      // def json = new File(jsonFile).text
-      // def json = readFile(file:"${jsonFile}")
-
-      // def json = new File(jsonFile).getText('UTF-8')
-      // jsonData = new JsonSlurperClassic().parseText(fileContents)
-    }
-    else {
-      println "Failure - the JSON file:  ${jsonFile} does not exist"
-     //  sh "exit 1"
-    }
-  }
-  catch(err)  {
-    println  "Err: failed when loading JSON file ${jsonFile} with Error: " + err.toString()
-    throw err
-  }
-
-  return jsonData
-}
-
-//def ScanDir() {
-//  def scriptFile = getClass().protectionDomain.codeSource.location.path
-//  def scriptDir = new File(getClass().protectionDomain.codeSource.location.path).parent
+//println getJsonFiles(workspace.toString())
 //
-//  println scriptDir
-//  println scriptFile
+//def jsonFiles=getJsonFiles(workspace.toString())
 //
-//  def list = []
+//jsonFiles.each { jsonFile ->
+//  def jobFolder = jsonFile.parent.toString().split('/').last()
+//  println jobFolder
+//  jsonData = readJsonFile(jsonFile)
+//  
+//  
+//}
 //
-//  def dir = new File(scriptDir)
-//  dir.eachFileRecurse (FileType.FILES) { file ->
-//    list << file
+//
+//// def scriptDirNew = new File(__FILE__).parent.absolutePath
+////println scriptDirNew
+//
+//
+//// jsonFiles = getJsonFiles()
+//
+//////jsonFiles.each {
+//////  println it
+//////  println readJsonFile(it)
+//////}
+////
+////
+////
+//pipelineJob('DSL_Pipeline') {
+//
+//  // def repo = 'https://github.com/jc1973/ansible-jenkins'
+//  def repo = 'https://github.com/jc1973/seedjob'
+//
+//  triggers {
+//    scm('H/5 * * * *')
 //  }
+//  displayName('sample-pipeline')
+//  description("Pipeline for $repo")
+//  
 //
-//  list.each {
-//    println it.path
+//  definition {
+//    cpsScm {
+//      scm {
+//        git {
+//          remote { url(repo) }
+//          branches('master', '**/feature*')
+//          scriptPath('pipelines/Jenkinsfile2')
+//          extensions { }  // required as otherwise it may try to tag the repo, which you may not want
+//        }
+//
+//        // the single line below also works, but it
+//        // only covers the 'master' branch and may not give you
+//        // enough control.
+//        // git(repo, 'master', { node -> node / 'extensions' << '' } )
+//      }
+//    }
 //  }
 //}
-
-def getJsonFiles(workspace) {
-
-  def jsonFiles = []
-  new File(workspace).eachFileRecurse(FILES) {
-      if(it.name.endsWith('.json')) {
-          jsonFiles << it
-      }
-  }
-  return jsonFiles
-}
-
+//
+//
+//
+//
+//def readJsonFile(jsonFile) {
+//  Map jsonData = [:]
+//  try {
+//    if (jsonFile.exists()) {
+//      println 'File exists'
+//
+//      def jsonSlurper = new JsonSlurper()
+//      jsonData = jsonSlurper.parse(new File(jsonFile))
+//      // def json = new File(jsonFile).text
+//      // def json = readFile(file:"${jsonFile}")
+//
+//      // def json = new File(jsonFile).getText('UTF-8')
+//      // jsonData = new JsonSlurperClassic().parseText(fileContents)
+//    }
+//    else {
+//      println "Failure - the JSON file:  ${jsonFile} does not exist"
+//     //  sh "exit 1"
+//    }
+//  }
+//  catch(err)  {
+//    println  "Err: failed when loading JSON file ${jsonFile} with Error: " + err.toString()
+//    throw err
+//  }
+//
+//  return jsonData
+//}
+//
+////def ScanDir() {
+////  def scriptFile = getClass().protectionDomain.codeSource.location.path
+////  def scriptDir = new File(getClass().protectionDomain.codeSource.location.path).parent
+////
+////  println scriptDir
+////  println scriptFile
+////
+////  def list = []
+////
+////  def dir = new File(scriptDir)
+////  dir.eachFileRecurse (FileType.FILES) { file ->
+////    list << file
+////  }
+////
+////  list.each {
+////    println it.path
+////  }
+////}
+//
+//def getJsonFiles(workspace) {
+//
+//  def jsonFiles = []
+//  new File(workspace).eachFileRecurse(FILES) {
+//      if(it.name.endsWith('.json')) {
+//          jsonFiles << it
+//      }
+//  }
+//  return jsonFiles
+//}
+//
