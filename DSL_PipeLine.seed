@@ -89,7 +89,7 @@ def readJsonFile(jsonFile) {
   try {
     if (jsonFile.exists()) {
       println 'File exists'
-      Sting fileContents = new.File(jsonFile).text
+      Sting fileContents = new File(jsonFile).text
       // def json = new File(jsonFile).text
       // def json = readFile(file:"${jsonFile}")
 
