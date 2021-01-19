@@ -40,7 +40,7 @@ jsonFiles.each { jsonFile ->
   // println jobFolder
   println jsonFile
   println jsonFile.getClass().toString()
-  jsonData = readJsonFile(jsonFile)
+  jsonData = readJsonFile(jsonFile.toString())
   
   
 }
