@@ -31,10 +31,11 @@ jsonFiles.each { jsonFile ->
     println jobName
 
     println(jsonData)
-    pipelineJob('DSL_Pipeline') {
+    pipelineJob(jsonData['job_name']) {
   
     // def repo = 'https://github.com/jc1973/ansible-jenkins'
-    def repo = 'https://github.com/jc1973/seedjob'
+    // def repo = 'https://github.com/jc1973/seedjob'
+    def repo = jsonData['git_repo']
   
     displayName(jsonData['job_name'])
     //description("Pipeline for $repo")
@@ -46,7 +47,7 @@ jsonFiles.each { jsonFile ->
           git {
             remote { url(repo) }
             branches('master', '**/feature*')
-            scriptPath('pipelines/Jenkinsfile2')
+            scriptPath(jsonData['jenkinsfile'])
             extensions { }  // required as otherwise it may try to tag the repo, which you may not want
           }
   

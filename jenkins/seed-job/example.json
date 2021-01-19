@@ -1,7 +1,7 @@
 {
   "job_name": "",
   "mutibranch": true,
-  "folder_name": "",
+  "folder_name": "folder",
   "jenkinsfile": "Jenkinsfile",
-  "git_repo": ""
+  "git_repo": "https://github.com/jc1973/ansible-jenkins"
 }
