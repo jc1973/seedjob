@@ -24,7 +24,7 @@ jsonFiles.each { jsonFile ->
     }
     
     gitBranch = ''
-    if (jsonData.containsKey('git_branch') {
+    if (jsonData.containsKey('git_branch')) {
       gitBranch = jsonData['git_branch']
     }
 
