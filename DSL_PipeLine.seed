@@ -1,7 +1,6 @@
 #!/usr/bin/env groovy
 
-import groovy.json.JsonSlurperClassic
-import groovy.json.JsonOutput
+import groovy.json.JsonSlurper
 import groovy.io.FileType
 import static groovy.io.FileType.FILES
 
@@ -90,8 +89,9 @@ def readJsonFile(jsonFile) {
   try {
     if (jsonFile.exists()) {
       println 'File exists'
-      String fileContents = new File(jsonFile).text
-      println fileContents
+
+      def jsonSlurper = new JsonSlurper()
+      jsonData = jsonSlurper.parse(new File(jsonFile))
       // def json = new File(jsonFile).text
       // def json = readFile(file:"${jsonFile}")
 
