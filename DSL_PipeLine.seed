@@ -24,8 +24,8 @@ jsonFiles.each { jsonFile ->
 //      }
 //    }
     
-    if (! jsonData.containsKey('jobname')) {
-        jsonData['jobname'] = jobName
+    if (! jsonData.containsKey('job_name')) {
+        jsonData['job_name'] = jobName
     }
 
     println jobName
@@ -36,8 +36,8 @@ jsonFiles.each { jsonFile ->
     // def repo = 'https://github.com/jc1973/ansible-jenkins'
     def repo = 'https://github.com/jc1973/seedjob'
   
-    displayName('sample-pipeline')
-    description("Pipeline for $repo")
+    displayName(jsonData['job_name'])
+    //description("Pipeline for $repo")
     
   
     definition {
