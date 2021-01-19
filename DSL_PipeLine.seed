@@ -18,10 +18,11 @@ println scriptFile
 
 hudson.FilePath workspace =  hudson.model.Executor.currentExecutor().getCurrentWorkspace()
 
+
 println workspace
 println workspace.getClass().toString()
 
-//println getJsonFiles(workspace)
+println getJsonFiles(workspace.toString())
 
 // def scriptDirNew = new File(__FILE__).parent.absolutePath
 //println scriptDirNew
