@@ -92,12 +92,12 @@ def readJsonFile(jsonFile) {
       jsonData = new JsonSlurperClassic().parseText(json)
     }
     else {
-      echo "Failure - the JSON file:  ${jsonFile} does not exist"
+      println "Failure - the JSON file:  ${jsonFile} does not exist"
       sh "exit 1"
     }
   }
   catch(err)  {
-    echo "Err: failed when loading JSON file ${jsonFile} with Error: " + err.toString()
+    println  "Err: failed when loading JSON file ${jsonFile} with Error: " + err.toString()
     throw err
   }
 
