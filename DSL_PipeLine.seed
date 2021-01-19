@@ -96,7 +96,7 @@ def readJsonFile(jsonFile) {
       // def json = readFile(file:"${jsonFile}")
 
       // def json = new File(jsonFile).getText('UTF-8')
-      jsonData = new JsonSlurperClassic().parseText(fileContents)
+      // jsonData = new JsonSlurperClassic().parseText(fileContents)
     }
     else {
       println "Failure - the JSON file:  ${jsonFile} does not exist"
