@@ -97,7 +97,8 @@ def readJsonFile(jsonFile) {
   Map jsonData = [:]
   try {
      if (jsonFile.exists()) {
-     println 'File exists ' + jsonFile + ' Class: ' + jsonFile.getClass().toString()
+     // println 'File exists ' + jsonFile + ' Class: ' + jsonFile.getClass().toString()
+     println 'File exists ' 
 
 // filename = '/var/lib/jenkins/workspace/seed-job/test.json'
 
