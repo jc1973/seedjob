@@ -14,7 +14,6 @@ def jsonFiles=getJsonFiles(workspace.toString())
 
 jsonFiles.each { jsonFile ->
     jobFolder = jsonFile.parent.toString().split('/').last()
-  // println jobFolder
     jsonData = readJsonFile(jsonFile.toString())
 
     jobName = jobFolder + '_' + jsonFile.toString().split('/').last() - '.json'
@@ -24,29 +23,23 @@ jsonFiles.each { jsonFile ->
       }
     }
     
-//    if (! jsonData.containsKey('job_name')) {
-//        jsonData['job_name'] = jobName
-//    }
+    gitBranch = ''
+    if (jsonData.containsKey('git_branch') {
+      gitBranch = jsonData['git_branch']
+    }
 
-    println jobName
-
-    println(jsonData)
     pipelineJob(jobName) {
   
-    // def repo = 'https://github.com/jc1973/ansible-jenkins'
-    // def repo = 'https://github.com/jc1973/seedjob'
     def repo = jsonData['git_repo']
   
     displayName(jobName)
-    //description("Pipeline for $repo")
-    
   
     definition {
       cpsScm {
         scm {
           git {
             remote { url(repo) }
-            branches('master', '**/feature*')
+            branches(gitBranch)
             scriptPath(jsonData['jenkinsfile'])
             extensions { }  // required as otherwise it may try to tag the repo, which you may not want
           }
