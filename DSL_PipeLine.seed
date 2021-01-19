@@ -5,42 +5,19 @@ import groovy.io.FileType
 import groovy.json.JsonSlurper
 import static groovy.io.FileType.FILES
 
-
-
-
-// Just testing
-
-
-
-println 'hello'
-
 def scriptFile = getClass().protectionDomain.codeSource.location.path
 def scriptDir = new File(getClass().protectionDomain.codeSource.location.path).parent
 
-println scriptDir
-println scriptFile
-//println env.WORKSPACE
-
-// println("script directory: ${new File(__FILE__).parent.absolutePath}")
-
 hudson.FilePath workspace =  hudson.model.Executor.currentExecutor().getCurrentWorkspace()
-
-
-println workspace
-println workspace.getClass().toString()
-
-
-
-println getJsonFiles(workspace.toString())
 
 def jsonFiles=getJsonFiles(workspace.toString())
 
 jsonFiles.each { jsonFile ->
   def jobFolder = jsonFile.parent.toString().split('/').last()
   // println jobFolder
-  println jsonFile
-  println jsonFile.getClass().toString()
   jsonData = readJsonFile(jsonFile.toString())
+
+    println(jsonData)
   
   
 }
@@ -100,7 +77,6 @@ def readJsonFile(jsonFile) {
   try {
     jsonSlurper = new JsonSlurper()
     jsonData = jsonSlurper.parse(new File(jsonFile))
-    println(jsonData)
   }
   catch(err)  {
     println  "Err: failed when loading JSON file ${jsonFile} with Error: " + err.toString()
