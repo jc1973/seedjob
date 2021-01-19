@@ -53,54 +53,6 @@ jsonFiles.each { jsonFile ->
     }
   }
   
-
-  
-  
-}
-
-
-// def scriptDirNew = new File(__FILE__).parent.absolutePath
-//println scriptDirNew
-
-
-// jsonFiles = getJsonFiles()
-
-////jsonFiles.each {
-////  println it
-////  println readJsonFile(it)
-////}
-//
-//
-//
-pipelineJob('DSL_Pipeline') {
-
-  // def repo = 'https://github.com/jc1973/ansible-jenkins'
-  def repo = 'https://github.com/jc1973/seedjob'
-
-  triggers {
-    scm('H/5 * * * *')
-  }
-  displayName('sample-pipeline')
-  description("Pipeline for $repo")
-  
-
-  definition {
-    cpsScm {
-      scm {
-        git {
-          remote { url(repo) }
-          branches('master', '**/feature*')
-          scriptPath('pipelines/Jenkinsfile2')
-          extensions { }  // required as otherwise it may try to tag the repo, which you may not want
-        }
-
-        // the single line below also works, but it
-        // only covers the 'master' branch and may not give you
-        // enough control.
-        // git(repo, 'master', { node -> node / 'extensions' << '' } )
-      }
-    }
-  }
 }
 
 
@@ -122,24 +74,6 @@ def readJsonFile(jsonFile) {
   return jsonData
 }
 
-//def ScanDir() {
-//  def scriptFile = getClass().protectionDomain.codeSource.location.path
-//  def scriptDir = new File(getClass().protectionDomain.codeSource.location.path).parent
-//
-//  println scriptDir
-//  println scriptFile
-//
-//  def list = []
-//
-//  def dir = new File(scriptDir)
-//  dir.eachFileRecurse (FileType.FILES) { file ->
-//    list << file
-//  }
-//
-//  list.each {
-//    println it.path
-//  }
-//}
 
 def getJsonFiles(workspace) {
 
