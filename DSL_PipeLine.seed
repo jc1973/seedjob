@@ -87,9 +87,9 @@ pipelineJob('DSL_Pipeline') {
 def readJsonFile(jsonFile) {
   Map jsonData = [:]
   try {
-    if (File(jsonFile).exists()) {
-      def json = readFile(file:"${jsonFile}")
-      jsonData = new JsonSlurperClassic().parseText(json)
+    if (jsonFile.exists()) {
+      // def json = readFile(file:"${jsonFile}")
+      // jsonData = new JsonSlurperClassic().parseText(json)
     }
     else {
       println "Failure - the JSON file:  ${jsonFile} does not exist"
