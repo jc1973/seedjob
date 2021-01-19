@@ -29,7 +29,7 @@ println getJsonFiles(workspace.toString())
 def jsonFiles=getJsonFiles(workspace.toString())
 
 jsonFiles.each { jsonFile ->
-  def jobFolder = jsonFile.parent
+  def jobFolder = jsonFile.parent - jsonFile.parent.parent
   println jobFolder
 }
 
