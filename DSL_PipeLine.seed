@@ -40,7 +40,7 @@ jsonFiles.each { jsonFile ->
   // println jobFolder
   println jsonFile
   println jsonFile.getClass().toString()
-  jsonData = readJsonFile('/var/lib/jenkins/workspace/seed-job/jenkins/seed-job/example.json')
+  jsonData = readJsonFile(jsonFile)
   
   
 }
