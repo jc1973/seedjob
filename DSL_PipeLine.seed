@@ -28,6 +28,14 @@ jsonFiles.each { jsonFile ->
       gitBranch = jsonData['git_branch']
     }
 
+    multiBranch = true
+    if (jsonData.containsKey('multibranch')) {
+      multiBranch = jsonData['multibranch'] 
+    }
+  
+
+    if (! multiBranch ) {
+      // declare pipeline (not multibranch)
     pipelineJob(jobName) {
   
     def repo = jsonData['git_repo']
@@ -51,6 +59,7 @@ jsonFiles.each { jsonFile ->
         }
       }
     }
+  }
   }
   
 }
