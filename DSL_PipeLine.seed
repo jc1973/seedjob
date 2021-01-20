@@ -13,53 +13,57 @@ hudson.FilePath workspace =  hudson.model.Executor.currentExecutor().getCurrentW
 def jsonFiles=getJsonFiles(workspace.toString())
 
 jsonFiles.each { jsonFile ->
-    jobFolder = jsonFile.parent.toString().split('/').last()
-    jsonData = readJsonFile(jsonFile.toString())
+  jobFolder = jsonFile.parent.toString().split('/').last()
+  jsonData = readJsonFile(jsonFile.toString())
 
-    jobName = jobFolder + '_' + jsonFile.toString().split('/').last() - '.json'
-    if (jsonData.containsKey('job_name')) {
-      if (jsonData['job_name'] != '' ) {
-        jobName = jsonData['job_name']
-      }
+  jobName = jobFolder + '_' + jsonFile.toString().split('/').last() - '.json'
+  if (jsonData.containsKey('job_name')) {
+    if (jsonData['job_name'] != '' ) {
+      jobName = jsonData['job_name']
     }
-    
-    gitBranch = ''
-    if (jsonData.containsKey('git_branch')) {
-      gitBranch = jsonData['git_branch']
-    }
-
-    multiBranch = true
-    if (jsonData.containsKey('multibranch')) {
-      multiBranch = jsonData['multibranch'] 
-    }
+  }
   
+  gitBranch = ''
+  if (jsonData.containsKey('git_branch')) {
+    gitBranch = jsonData['git_branch']
+  }
 
-    if (! multiBranch ) {
-      // declare pipeline (not multibranch)
+  multiBranch = true
+  if (jsonData.containsKey('multibranch')) {
+    multiBranch = jsonData['multibranch'] 
+  }
+
+  if (! multiBranch ) {
+    // declare pipeline (not multibranch)
+    println 'Setting up declarative pipeline job' + jobName
     pipelineJob(jobName) {
   
-    def repo = jsonData['git_repo']
-  
-    displayName(jobName)
-  
-    definition {
-      cpsScm {
-        scm {
-          git {
-            remote { url(repo) }
-            branches(gitBranch)
-            scriptPath(jsonData['jenkinsfile'])
-            extensions { }  // required as otherwise it may try to tag the repo, which you may not want
+      def repo = jsonData['git_repo']
+    
+      displayName(jobName)
+    
+      definition {
+        cpsScm {
+          scm {
+            git {
+              remote { url(repo) }
+              branches(gitBranch)
+              scriptPath(jsonData['jenkinsfile'])
+              extensions { }  // required as otherwise it may try to tag the repo, which you may not want
+            }
+    
+            // the single line below also works, but it
+            // only covers the 'master' branch and may not give you
+            // enough control.
+            // git(repo, 'master', { node -> node / 'extensions' << '' } )
           }
-  
-          // the single line below also works, but it
-          // only covers the 'master' branch and may not give you
-          // enough control.
-          // git(repo, 'master', { node -> node / 'extensions' << '' } )
         }
       }
     }
   }
+
+  if ( multiBranch ) {
+    println 'Setting up multibranch pipeline job' + jobName
   }
   
 }
