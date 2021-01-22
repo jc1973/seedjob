@@ -11,6 +11,8 @@ def scriptDir = new File(getClass().protectionDomain.codeSource.location.path).p
 hudson.FilePath workspace =  hudson.model.Executor.currentExecutor().getCurrentWorkspace()
 
 def jsonFiles=getJsonFiles(workspace.toString())
+def odinCredentialsID = 'e5a060d0-b023-4c3b-92c8-f2d8e48e53e8'
+def repoOwner = 'odinsol'
 
 jsonFiles.each { jsonFile ->
   jobFolder = jsonFile.parent.toString().split('/').last()
@@ -62,12 +64,76 @@ jsonFiles.each { jsonFile ->
 
   if ( multiBranch ) {
     println 'Setting up multibranch pipeline job' + jobName
+
+/*
+
+https://github.com/jenkinsci/bitbucket-branch-source-plugin
+
+
+multibranchPipelineJob("job") {
+  branchSources {
+    branchSource {
+      source {
+        bitbucket {
+
+
+//          id('123456789') // IMPORTANT: use a constant and unique identifier
+//          remote(repo)
+//          credentialsId(odinCredentialsID)
+//          includes('JENKINS-*')
+
+          credentialsId(odinCredentialsID)
+          repoOwner(repoOwner)
+          repository(repo)                       
+          traits {
+            headWildcardFilter {
+              includes("branchestoinclude")
+              excludes("toexclude")
+            }
+          }
+        }
+      }
+      strategy {
+        defaultBranchPropertyStrategy {
+          props {
+            // keep only the last 8 builds
+            buildRetentionBranchProperty {
+              buildDiscarder {
+                logRotator {
+                  daysToKeepStr("-1")
+                  numToKeepStr("8")
+                  artifactDaysToKeepStr("-1")
+                  artifactNumToKeepStr("-1")
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+  // Branch behaviour
+  configure {
+    def traits = it / sources / data / 'jenkins.branch.BranchSource' / source / traits
+    traits << 'com.cloudbees.jenkins.plugins.bitbucket.BranchDiscoveryTrait' {
+      strategyId(3) // detect all branches -refer the plugin source code for various options
+    }
+  }
+  orphanedItemStrategy {
+    discardOldItems {
+      numToKeep(8)
+    }
+  }
+}
+*/
+
+
     multibranchPipelineJob(jobName) {
       branchSources {
         git {
           id('123456789') // IMPORTANT: use a constant and unique identifier
           remote(repo)
-          credentialsId('github-ci')
+          credentialsId(odinCredentialsID)
           includes('JENKINS-*')
         }
       }
